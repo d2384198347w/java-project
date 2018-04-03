@@ -6,6 +6,7 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '1'))
     }
+    
     stages {
         stage('Unit Tests') {
             steps {
@@ -27,7 +28,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/'
+                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
             }
         }
     }
