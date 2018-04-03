@@ -6,8 +6,13 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '1'))
     }
-    
+
     stages {
+        stage ('Echo something') {
+            steps {
+                sh "echo Branch: ${env.BRANCH_NAME}"
+            }
+        }
         stage('Unit Tests') {
             steps {
                 sh 'ant -f test.xml -v'
@@ -27,6 +32,9 @@ pipeline {
  
         }
         stage('deploy') {
+            when {
+
+            }
             steps {
                 sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
             }
