@@ -18,9 +18,6 @@ pipeline {
             agent {
                 label 'master'
             }
-            when {
-                branch 'development'
-            }
             steps {
                sh 'ant -f build.xml -v'
             }
