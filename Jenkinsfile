@@ -32,7 +32,8 @@ pipeline {
             steps {
                 sh "echo Branch: ${env.BRANCH_NAME}"
                 sh "pwd"
-                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
+		sh "mkdir /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
+                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
             }
         }
 	stage('Running on CentOS') {
@@ -49,10 +50,30 @@ pipeline {
 	    label 'master'
 	  }
 	  when {
-	    branch 'development'
+	    branch 'master'
 	  }
 	  steps {
             sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
+	  }
+	}
+	stage('Promote development branch to master') {
+	  agent{
+	    label 'master'
+	  }
+	  when {
+	    branch 'development'
+	  }
+	  steps {
+	    echo "Stashing any local changes"
+	    sh 'git stash'
+	    echo "eching out deveopment branch"
+	    sh 'git checkout development'
+	    echo "checking out master branch"
+	    sh 'git checkout master'
+	    echo 'merging development into master branch'
+	    sh 'git merge development'
+	    echo 'PUshing to origin master'
+	    sh 'git push origin master'
 	  }
 	}
     }
