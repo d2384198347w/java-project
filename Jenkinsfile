@@ -46,7 +46,7 @@ pipeline {
 	}
 	stage('test via docker') {
 	  agent{
-	    docker 'openjdk:8u121-jre'
+	    docker 'openjdk:9-slim'
 	  }
 	  steps {
 	    sh "wget http://alvinwang6.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
