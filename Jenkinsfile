@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'master'
     }
+    envrionment {
+          MAJOR_VERSION = 1
+    }
     stages {
         stage('Unit Tests') {
             agent {
@@ -32,7 +35,7 @@ pipeline {
             steps {
                 sh "echo Branch: ${env.BRANCH_NAME}"
                 sh "pwd"
-                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
+                sh "cp dist/rectangle_rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/${env.BRANCH_NAME}/"
             }
         }
 	stage('Running on CentOS') {
@@ -40,8 +43,8 @@ pipeline {
 	    label 'CentOS'
 	  }
 	  steps {
-	    sh "wget http://alvinwang6.mylabserver.com/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.BUILD_NUMBER}.jar"
-	    sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
+	    sh "wget http://alvinwang6.mylabserver.com/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
+	    sh "java -jar _rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar 3 4"
 	  }
 	}
 	stage('promote to green') {
@@ -52,7 +55,7 @@ pipeline {
 	    branch 'master'
 	  }
 	  steps {
-            sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
+            sh "cp dist/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/"
 	  }
 	}
 	stage('Promote development branch to master') {
@@ -73,6 +76,9 @@ pipeline {
 	    sh 'git merge development'
 	    echo 'PUshing to origin master'
 	    sh 'git push origin master'
+	    echo 'tagging release'
+	    sh "git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+	    sh "git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	  }
 	}
     }
