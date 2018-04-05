@@ -46,6 +46,7 @@ pipeline {
 	}
 	stage('test via docker') {
 	  agent{
+	    label 'master'
 	    docker 'openjdk:9-slim'
 	  }
 	  steps {
