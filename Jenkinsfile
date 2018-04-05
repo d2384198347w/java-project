@@ -2,7 +2,7 @@ pipeline {
     agent {
         label 'master'
     }
-    envrionment {
+    environment {
           MAJOR_VERSION = 1
     }
     stages {
