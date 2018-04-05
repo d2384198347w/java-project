@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh "echo Branch: ${env.BRANCH_NAME}"
                 sh "pwd"
-                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangle/all/"
+                sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
             }
         }
 	stage('Running on CentOS') {
@@ -40,7 +40,7 @@ pipeline {
 	    label 'CentOS'
 	  }
 	  steps {
-	    sh "wget http://alvinwang6.mylabserver.com/rectangles/all/rectangles_${env.BUILD_NUMBER}.jar"
+	    sh "wget http://alvinwang6.mylabserver.com/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
 	    sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 3 4"
 	  }
 	}
