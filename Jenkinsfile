@@ -40,7 +40,7 @@ pipeline {
         }
 		stage('Running on CentOS') {
 	  		agent{
-	    		label 'CentOS'
+	    		label 'master'
 	  		}
 			steps {
 				sh "wget http://alvinwang6.mylabserver.com/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${env.BUILD_NUMBER}.jar"
