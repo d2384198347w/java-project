@@ -81,16 +81,17 @@ pipeline {
 	    		sh "git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	    		sh "git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
 	  		}
+			post {
+	  			success {
+	    			emailext(
+	    			  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] succeeded.",
+	    			  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
+	    			  to: "wagnan.alvin@gmail.com"
+	    			)
+	  			}
+			}
 		}
-		post {
-	  		success {
-	    		emailext(
-	    		  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] succeeded.",
-	    		  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
-	    		  to: "wagnan.alvin@gmail.com"
-	    		)
-	  		}
-		}
+
     }
     post {
     	failure {
