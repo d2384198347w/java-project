@@ -86,7 +86,7 @@ pipeline {
 	    			emailext(
 	    			  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] succeeded.",
 	    			  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
-	    			  to: "wagnan.alvin@gmail.com"
+	    			  to: "wangnan.alvin@gmail.com"
 	    			)
 	  			}
 			}
@@ -98,7 +98,7 @@ pipeline {
         	emailext(
         	  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] Failed!",
         	  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
-        	  to: "wagnan.alvin@gmail.com"
+        	  to: "wangnan.alvin@gmail.com"
         )
       } 
     } 
