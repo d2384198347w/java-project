@@ -83,7 +83,7 @@ pipeline {
 	  		}
 			post {
 	  			success {
-	    			emailext(
+	    			email(
 	    			  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] succeeded.",
 	    			  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
 	    			  to: "wangnan.alvin@gmail.com"
@@ -95,7 +95,7 @@ pipeline {
     }
     post {
     	failure {
-        	emailext(
+        	email(
         	  subject: "${env.JOB_NAME} [env.{BUILD_NUMBER}] Failed!",
         	  body: "check ${env.JOB_NAME} [env.{BUILD_NUMBER}]",
         	  to: "wangnan.alvin@gmail.com"
